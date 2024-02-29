@@ -1,0 +1,49 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "прежде чем пользоваться Апи используй /api/parser/run - это запустит парсер и создаст БД ",
+        "version": "1.1"
+    },
+    "paths": {
+        "/api/parser/run": {
+            "get": {
+                "summary": "запускает парсер с файла и сохраняет данные в базу данных",
+                "operationId": "272e696ecf2575a874095e268fd61653",
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        },
+        "/api/get/all": {
+            "get": {
+                "summary": "покажет все материалы какие есть в базе данных",
+                "operationId": "49459c0103716929ca652d315ec87c6f",
+                "responses": {
+                    "200": {
+                        "description": "successfully"
+                    }
+                }
+            }
+        },
+        "/api/get": {
+            "get": {
+                "summary": "показать материал по айди",
+                "operationId": "2a727f9b915fc7a1e2832267be52dc13",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id for need material"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        }
+    }
+}

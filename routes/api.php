@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\InfoController;
+use App\Http\Controllers\API\BuildMallApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/parser/run', [BuildMallApiController::class, 'parserRun']);
+Route::get('/get/all', [BuildMallApiController::class, 'getAll']);
+Route::get('/get', [BuildMallApiController::class, 'getOne']);
