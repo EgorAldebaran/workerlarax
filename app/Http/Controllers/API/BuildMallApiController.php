@@ -35,6 +35,8 @@ class BuildMallApiController extends Controller
         foreach ($reader as $read => $data) {
 
             $data["Описание,,,,,,,,,,,,,,,,,,,,,,"] = str_replace([';',',', '\\'], '', $data["Описание,,,,,,,,,,,,,,,,,,,,,,"]);
+            $data["Цена"] = preg_replace('/[^[:digit:]]/', '', $data["Цена"]);
+            $data["ЦенаСП"] = preg_replace('/[^[:digit:]]/', '', $data["ЦенаСП"]);
             $unit = new BuildMart;
             $unit->code = $data["Код"];
             $unit->title = $data["Наименование"];
