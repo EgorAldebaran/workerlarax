@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('build_malls', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
+            $table->string('title');
+            $table->string('level1');
+            $table->string('level2');
+            $table->string('level3');
+            $table->string('price');
+            $table->string('priceSP');
+            $table->string('count');
+            $table->string('properties', 4000);
+            $table->string('additionalBuy');
+            $table->string('dimension');
+            $table->string('image');
+            $table->string('isMainPage');
+            $table->text('description', 4000);
             $table->timestamps();
         });
     }

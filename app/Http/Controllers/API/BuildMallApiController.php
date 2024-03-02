@@ -35,9 +35,9 @@ class BuildMallApiController extends Controller
         foreach ($reader as $read => $data) {
 
             $data["Описание,,,,,,,,,,,,,,,,,,,,,,"] = str_replace([';',',', '\\'], '', $data["Описание,,,,,,,,,,,,,,,,,,,,,,"]);
-            $data["Цена"] = preg_replace('/[^[:digit:]]/', '', $data["Цена"]);
-            $data["ЦенаСП"] = preg_replace('/[^[:digit:]]/', '', $data["ЦенаСП"]);
-            $unit = new BuildMart;
+            //$data["Цена"] = preg_replace('/[^[:digit:]]/', '', $data["Цена"]);
+            //$data["ЦенаСП"] = preg_replace('/[^[:digit:]]/', '', $data["ЦенаСП"]);
+            $unit = new BuildMall;
             $unit->code = $data["Код"];
             $unit->title = $data["Наименование"];
             $unit->level1 = $data["Уровень1"];
@@ -97,5 +97,10 @@ class BuildMallApiController extends Controller
         $material = BuildMall::find($request->id);
 
         return response()->json($material);
+    }
+
+    public function cyber(Request $request)
+    {
+        var_dump ($request -> getContent());
     }
 }
