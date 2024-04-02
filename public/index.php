@@ -32,9 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "data is empty\n";
     }
     
-    $fname = $data['fname'];
-    $lname = $data['lname'];
-    $account = $data['account'];
+    $fname = htmlspecialchars($data['fname']);
+    $fname = htmlspecialchars($data['lname']);
+    $fname = htmlspecialchars($data['account']);
+
 
     insert($pdo, $tablename, $fname, $lname, $account);
 
@@ -56,5 +57,9 @@ function get(object $pdo, string $tablename, string $id)
 
 function insert(object $pdo, string $tablename, string $fname, string $lname, int $account)
 {
-    $pdo->query("insert into $tablename (fname, lname, account) values ('$fname', '$lname', $account)");
+    $pdo->prepare("INSERT INTO $tablename (fname, lname, account) values (:fname, :lname, :account)");
+    $pdo->bindParam(':fname', $fname);
+    $pdo->bindParam(':lname', $lname);
+    $pdo->bindParam(':account', $account);
+    $pdo->execute();
 }
