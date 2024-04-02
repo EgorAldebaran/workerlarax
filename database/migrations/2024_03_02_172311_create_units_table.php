@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->string('unitname');
-            $table->integer(1000);
+            $table->string('unitname')->nullable();
+            $table->integer('secret_key')->default(0);
             $table->timestamps();
         });
     }

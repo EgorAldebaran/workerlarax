@@ -1,55 +1,60 @@
 <?php
 
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Http\Request;
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 
-define('LARAVEL_START', microtime(true));
+$servername = '127.0.0.1';
+$dbname = 'worker';
+$tablename = 'user';
+$password = 'password';
+$username = 'root';
 
-/*
-|--------------------------------------------------------------------------
-| Check If The Application Is Under Maintenance
-|--------------------------------------------------------------------------
-|
-| If the application is in maintenance / demo mode via the "down" command
-| we will load this file so that any pre-rendered content can be shown
-| instead of starting the framework, which could cause an exception.
-|
-*/
+$pdo = new PDO("mysql:dbname=$dbname;host=$servername", $username, $password);
 
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
+$choice = htmlspecialchars($_GET['user']);
+$id = htmlspecialchars($_GET['id']);
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($choice === 'one' && $id !== null) {
+        get($pdo, $tablename, $id);
+    }
+    if ($choice === 'all') {
+        getUsers($pdo, $tablename);
+    }
 }
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| this application. We just need to utilize it! We'll simply require it
-| into the script here so we don't need to manually load our classes.
-|
-*/
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $json_data = file_get_contents('php://input');
+    $data = json_decode($json_data, true);
 
-require __DIR__.'/../vendor/autoload.php';
+    if ($data == null) {
+        echo "data is empty\n";
+    }
+    
+    $fname = $data['fname'];
+    $lname = $data['lname'];
+    $account = $data['account'];
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request using
-| the application's HTTP kernel. Then, we will send the response back
-| to this client's browser, allowing them to enjoy our application.
-|
-*/
+    insert($pdo, $tablename, $fname, $lname, $account);
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+    echo 'successfully';
+}
 
-$kernel = $app->make(Kernel::class);
+function getUsers(object $pdo, string $tablename)
+{
+    $result = $pdo->query("select * from $tablename")->fetchAll();
+    echo json_encode($result);
+}
 
-$response = $kernel->handle(
-    $request = Request::capture()
-)->send();
+function get(object $pdo, string $tablename, string $id)
+{
+    $result = $pdo->query("select * from $tablename where id = $id")->fetch();
+    echo json_encode($result);
+}
 
-$kernel->terminate($request, $response);
+
+function insert(object $pdo, string $tablename, string $fname, string $lname, int $account)
+{
+    $pdo->query("insert into $tablename (fname, lname, account) values ('$fname', '$lname', $account)");
+}

@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\InfoController;
-use App\Http\Controllers\API\BuildMallApiController;
+use App\Http\Controllers\CyberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +16,4 @@ use App\Http\Controllers\API\BuildMallApiController;
 |
 */
 
-Route::get('/parser/run', [BuildMallApiController::class, 'parserRun']);
-Route::get('/get/all', [BuildMallApiController::class, 'getAll']);
-Route::get('/get', [BuildMallApiController::class, 'getOne']);
+Route::post('/button', [CyberController::class, 'button']);

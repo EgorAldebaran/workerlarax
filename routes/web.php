@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BuildMallController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +13,3 @@ use App\Http\Controllers\BuildMallController;
 |
 */
 
-Route::get('/buildmall', [BuildMallController::class, 'parser']);

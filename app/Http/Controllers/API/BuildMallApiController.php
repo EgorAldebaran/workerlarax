@@ -99,8 +99,4 @@ class BuildMallApiController extends Controller
         return response()->json($material);
     }
 
-    public function cyber(Request $request)
-    {
-        var_dump ($request -> getContent());
-    }
 }
